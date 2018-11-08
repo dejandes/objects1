@@ -1,3 +1,5 @@
+// this is an example of working with objects
+
 const person = {
     fullName: '',
     bills: [],
