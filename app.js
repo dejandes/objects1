@@ -1,13 +1,10 @@
 // this is an example of working with objects
+// without using the constructor
 
-const person = {
-    fullName: '',
-    bills: [],
-
-    write: () => console.log(`${this.fullName} pays average of tips: ${this.average}`)
-    };
-
-calcTips = () => {
+var dejan = {
+    fullName: 'Dejan D',
+    bills: [124, 48, 268, 180, 42],
+    calcTips: function() {
         this.tips = [];
         this.finalValues = [];
                 
@@ -29,8 +26,36 @@ calcTips = () => {
             this.finalValues[i] = bill + bill * percentage;
         }
     }
+}
 
-calcAverage = (tips) => {
+var mark = {
+    fullName: 'Mark Miller',
+    bills: [77, 475, 110, 45],
+    calcTips: function() {
+        this.tips = [];
+        this.finalValues = [];
+                
+        for (var i = 0; i < this.bills.length; i++) {
+            // Determine percentage based on tipping rules
+            var percentage;
+            var bill = this.bills[i];
+            
+            if (bill < 100) {
+                percentage = .2;
+            } else if (bill >= 100 && bill < 300) {
+                percentage = .1;
+            } else {
+                percentage = .25;
+            }
+            
+            // Add results to the corresponing arrays
+            this.tips[i] = bill * percentage;
+            this.finalValues[i] = bill + bill * percentage;
+        }
+    }
+}
+
+function calcAverage(tips) {
     var sum = 0;
     for (var i = 0; i < tips.length; i++) {
         sum = sum + tips[i];
@@ -38,11 +63,17 @@ calcAverage = (tips) => {
     return sum / tips.length;
 }
 
-mark = Object.create(person);
-mark.fullName = "Mark Smith";
-mark.bills = [124, 48, 268, 180, 42];
+// Do the calculations
+dejan.calcTips();
+mark.calcTips();
 
-mark.calcTips;
+dejan.average = calcAverage(dejan.tips);
 mark.average = calcAverage(mark.tips);
+console.log(dejan, mark);
 
-mark.write();
+if (dejan.average > mark.average) {
+    console.log(dejan.fullName + '\'s family pays higher tips, with an average of $' + dejan.average);
+} else if (mark.average > dejan.average) {
+    console.log(mark.fullName + '\'s family pays higher tips, with an average of $' + mark.average);
+}
+
